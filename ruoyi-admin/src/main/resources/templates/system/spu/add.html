@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增商品')" />
+    <th:block th:include="include :: bootstrap-fileinput-css"/>
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-spu-add">
+            <h4 class="form-header h4">基本信息</h4>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">标题：</label>
+                        <div class="col-sm-8">
+                            <input name="title" class="form-control" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">小标题：</label>
+                        <div class="col-sm-8">
+                            <input name="titleMinor" class="form-control" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">logo：</label>
+                        <div class="col-sm-8">
+                            <input type="hidden" name="logo">
+                            <div class="file-loading">
+                                <input class="form-control file-upload" id="logo" name="file" type="file">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">图片：</label>
+                        <div class="col-sm-8">
+                            <input type="hidden" name="banner">
+                            <div class="file-loading">
+                                <input class="form-control file-upload" id="banner" name="file" type="file">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <h4 class="form-header h4">权益设置</h4>
+        <a class="btn btn-success" onclick="aa()" >
+            <i class="fa fa-plus"></i> 添加
+        </a>
+        <form class="form-horizontal m" id="form-spuvalue-add">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">名称：</label>
+                        <div class="col-sm-8">
+                            <input name="name" class="form-control" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">销售价格：</label>
+                        <div class="col-sm-8">
+                            <input name="salesPrice" class="form-control" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">市场价格：</label>
+                        <div class="col-sm-8">
+                            <input name="marketPrice" class="form-control" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="xz"> </div>
+        </form>
+        <h4 class="form-header h4">权益详情</h4>
+        <a id="spudetails"  class="btn btn-success" onclick="spudetail()" >
+            <i class="fa fa-plus"></i> 添加
+        </a>
+        <form class="form-horizontal m" id="form-spudetail-add">
+            <div class="row" >
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label is-required">展示类型：</label>
+                        <div class="col-sm-8">
+                            <label class="radio-box"> <input type="radio"  name="menuType" value="M" /> 海报 </label>
+                            <label class="radio-box"> <input type="radio" name="menuType" value="C" /> 文字 </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8"></div>
+            </div>
+            <div class="row" id="wenzi">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">名称：</label>
+                        <div class="col-sm-8">
+                            <input id="detailsName" name="detailsName" class="form-control" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">介绍：</label>
+                        <div class="col-sm-8">
+                            <textarea id="detailsContent" name="detailsContent" class="form-control" type="text"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div id="xzqy"> </div>
+            </div>
+
+            <div class="row" id="haibao">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">海报：</label>
+                        <div class="col-sm-8">
+                            <input type="hidden" name="detailsPosters">
+                            <div class="file-loading">
+                                <input class="form-control file-upload" id="detailsPosters" name="file" type="file">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-sm-offset-5 col-sm-10">
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: bootstrap-fileinput-js"/>
+    <script th:inline="javascript">
+        var a = 0;
+        var detail = 0;
+        var isCheck="M";
+        var prefix = ctx + "system/spu"
+        var url = ctx + "system/value"
+        $('input:radio[name="menuType"][value="M"]').prop('checked', true);
+        $("#wenzi").hide();
+        $("#haibao").show();
+        $("#spudetails").hide();
+        $("#form-spu-add").validate({
+            focusCleanup: true
+        });
+        function submitHandler() {
+           //权益设置
+            var datas = []
+            var data = {//json对象   {key:value}
+                "name": $('#form-spuvalue-add').find("input[name='name']").val(),
+                "salesPrice": $('#form-spuvalue-add').find("input[name='salesPrice']").val(),
+                "marketPrice": $('#form-spuvalue-add').find("input[name='marketPrice']").val()
+            };
+            datas.push(data)
+            var tb = $('#xz');
+            var trs = tb.children();//.children()方法获取tbody的子元素
+            $.each(trs, function (i, n) {//jquery迭代器,用于循环数组和json  i表示索引   n表示当前循环的元素
+                var name = $(n).find("input[name='name']").val();
+                var salesPrice = $(n).find("input[name='salesPrice']").val();
+                var marketPrice = $(n).find("input[name='marketPrice']").val();
+                var data = {//json对象   {key:value}
+                    "name": name,
+                    "salesPrice": salesPrice,
+                    "marketPrice": marketPrice
+                };
+
+                datas.push(data);//数组的push方法
+            });
+            var requestData = JSON.stringify(datas)
+            //权益详情
+            var spudatas = []
+            if(isCheck == "M"){
+                var spudata = {//json对象   {key:value}
+                    "detailsPosters":  $('#form-spudetail-add').find("input[name='detailsPosters']").val()
+                };
+                spudatas.push(spudata)
+            }else if(isCheck == "C"){
+                var spudata = {//json对象   {key:value}
+                    "detailsName": $('#form-spudetail-add').find("input[name='detailsName']").val(),
+                    "detailsContent": $('#form-spudetail-add').find("textarea[name='detailsContent']").val(),
+                };
+                spudatas.push(spudata)
+                var tb = $('#xzqy');
+                var trs = tb.children();//.children()方法获取tbody的子元素
+                $.each(trs, function (i, n) {//jquery迭代器,用于循环数组和json  i表示索引   n表示当前循环的元素
+                    var detailsName = $(n).find("input[name='detailsName']").val();
+                    var detailsContent = $(n).find("textarea[name='detailsContent']").val();
+                    var spudata = {//json对象   {key:value}
+                        "detailsName": detailsName,
+                        "detailsContent": detailsContent
+                    };
+                    spudatas.push(spudata)//数组的push方法
+                });
+            }
+            var spuData = JSON.stringify(spudatas)
+            var spu = $('#form-spu-add').serializeArray();
+            spu.push({"name": "hxbSpuValue", "value": requestData});
+            spu.push({"name": "hxbSpuDetails", "value": spuData});
+            spu.push({"name": "detailsType", "value": isCheck});
+            if ($.validate.form()) {
+                $.operate.saveTab(prefix + "/add", spu);
+            }
+        }
+        function aa(){
+            var str = "<div id="+a+" class=\"row\">\n" +
+                "                <div class=\"col-sm-4\">\n" +
+                "                    <div class=\"form-group\">\n" +
+                "                        <label class=\"col-sm-3 control-label\">名称：</label>\n" +
+                "                        <div class=\"col-sm-8\">\n" +
+                "                            <input name=\"name\" class=\"form-control\" type=\"text\">\n" +
+                "                        </div>\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "                <div class=\"col-sm-4\">\n" +
+                "                    <div class=\"form-group\">\n" +
+                "                        <label class=\"col-sm-3 control-label\">销售价格：</label>\n" +
+                "                        <div class=\"col-sm-8\">\n" +
+                "                            <input name=\"salesPrice\" class=\"form-control\" type=\"text\">\n" +
+                "                        </div>\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "                <div class=\"col-sm-4\">\n" +
+                "                    <div class=\"form-group\">\n" +
+                "                        <label class=\"col-sm-3 control-label\">市场价格：</label>\n" +
+                "                        <div class=\"col-sm-8\">\n" +
+                "                            <input name=\"marketPrice\" class=\"form-control\" type=\"text\">\n" +
+                "                        </div>\n" +
+                "                   <button onclick=\"bb("+a+")\">删除</button>  </div>\n" +
+                "               </div>\n" +
+                "             </div>";
+            a++;
+            $("#xz").append(str);
+        }
+        function bb(e){
+            $("div#"+e+"").remove();
+        }
+        function spudetail(){
+            var str = "<div id= s"+detail+" class=\"row\">\n" +
+                "                <div class=\"col-sm-4\">\n" +
+                "                    <div class=\"form-group\">\n" +
+                "                        <label class=\"col-sm-3 control-label\">名称：</label>\n" +
+                "                        <div class=\"col-sm-8\">\n" +
+                "                            <input id=\"detailsName\" name=\"detailsName\" class=\"form-control\" type=\"text\">\n" +
+                "                        </div>\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "                <div class=\"col-sm-8\">\n" +
+                "                    <div class=\"form-group\">\n" +
+                "                        <label class=\"col-sm-3 control-label\">介绍：</label>\n" +
+                "                        <div class=\"col-sm-8\">\n" +
+                "                            <textarea id=\"detailsContent\" name=\"detailsContent\" class=\"form-control\" type=\"text\"></textarea>\n" +
+                "                        </div>\n" +
+                "                    <button onclick=\"delspudetail("+detail+")\">删除</button>  </div>\n" +
+                "                </div>\n" +
+                "            </div>";
+            detail++;
+            $("#xzqy").append(str);
+        }
+        function delspudetail(e){
+            $("div#s"+e+"").remove();
+        }
+
+        $(function() {
+            $('input').on('ifChecked', function(event){
+                var menuType = $(event.target).val();
+                if (menuType == "M") {
+                    $("#wenzi").hide();
+                    $("#haibao").show();
+                    $("#spudetails").hide();
+                    isCheck = "M";
+                } else if (menuType == "C") {
+                    $("#wenzi").show();
+                    $("#haibao").hide();
+                    $("#spudetails").show();
+                    isCheck = "C";
+                }
+            });
+        });
+
+        $(".file-upload").fileinput({
+            uploadUrl: ctx + 'common/upload',
+            maxFileCount: 1,
+            showCaption: false,
+            autoReplace: true
+        }).on('fileuploaded', function (event, data, previewId, index) {
+            $("input[name='" + event.currentTarget.id + "']").val(data.response.url)
+        }).on('fileremoved', function (event, id, index) {
+            $("input[name='" + event.currentTarget.id + "']").val('')
+        })
+    </script>
+</body>
+</html>

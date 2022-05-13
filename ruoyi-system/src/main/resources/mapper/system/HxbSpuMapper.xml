@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HxbSpuMapper">
+    
+    <resultMap type="HxbSpu" id="HxbSpuResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="titleMinor"    column="title_minor"    />
+        <result property="logo"    column="logo"    />
+        <result property="banner"    column="banner"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isShow"    column="is_show"    />
+        <result property="isDel"    column="is_del"    />
+        <result property="detailsType"    column="details_type"    />
+    </resultMap>
+
+    <sql id="selectHxbSpuVo">
+        select id, title, title_minor, logo, banner, create_time, update_time,is_show,is_del,details_type from hxb_spu
+    </sql>
+
+    <select id="selectHxbSpuList" parameterType="HxbSpu" resultMap="HxbSpuResult">
+        <include refid="selectHxbSpuVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="titleMinor != null  and titleMinor != ''"> and title_minor = #{titleMinor}</if>
+            <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
+            <if test="banner != null  and banner != ''"> and banner = #{banner}</if>
+        </where>
+    </select>
+    
+    <select id="selectHxbSpuById" parameterType="Integer" resultMap="HxbSpuResult">
+        <include refid="selectHxbSpuVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHxbSpu" parameterType="HxbSpu" keyProperty="id" >
+        insert into hxb_spu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="title != null">title,</if>
+            <if test="titleMinor != null">title_minor,</if>
+            <if test="logo != null">logo,</if>
+            <if test="banner != null">banner,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isShow != null">is_show,</if>
+            <if test="isDel != null">is_del,</if>
+            <if test="detailsType != null">details_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="title != null">#{title},</if>
+            <if test="titleMinor != null">#{titleMinor},</if>
+            <if test="logo != null">#{logo},</if>
+            <if test="banner != null">#{banner},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isShow != null">#{isShow},</if>
+            <if test="isDel != null">#{isDel},</if>
+            <if test="detailsType != null">#{detailsType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHxbSpu" parameterType="HxbSpu">
+        update hxb_spu
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="titleMinor != null">title_minor = #{titleMinor},</if>
+            <if test="logo != null">logo = #{logo},</if>
+            <if test="banner != null">banner = #{banner},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isShow != null">is_show = #{isShow},</if>
+            <if test="isDel != null">is_del = #{isDel},</if>
+            <if test="detailsType != null">details_type = #{detailsType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHxbSpuById" parameterType="Integer">
+        delete from hxb_spu where id = #{id}
+    </delete>
+
+    <delete id="deleteHxbSpuByIds" parameterType="String">
+        delete from hxb_spu where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

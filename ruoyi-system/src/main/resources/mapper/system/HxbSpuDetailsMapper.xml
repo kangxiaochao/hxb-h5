@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HxbSpuDetailsMapper">
+    
+    <resultMap type="HxbSpuDetails" id="HxbSpuDetailsResult">
+        <result property="id"    column="id"    />
+        <result property="spuId"    column="spu_id"    />
+        <result property="detailsName"    column="details_name"    />
+        <result property="detailsContent"    column="details_content"    />
+        <result property="detailsPosters"    column="details_posters"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectHxbSpuDetailsVo">
+        select id, details_name, details_content, details_posters, create_time, update_time,spu_id from hxb_spu_details
+    </sql>
+
+    <select id="selectHxbSpuDetailsList" parameterType="HxbSpuDetails" resultMap="HxbSpuDetailsResult">
+        <include refid="selectHxbSpuDetailsVo"/>
+        <where>  
+            <if test="detailsName != null  and detailsName != ''"> and details_name like concat('%', #{detailsName}, '%')</if>
+            <if test="detailsContent != null  and detailsContent != ''"> and details_content = #{detailsContent}</if>
+            <if test="detailsPosters != null  and detailsPosters != ''"> and details_posters = #{detailsPosters}</if>
+        </where>
+    </select>
+    
+    <select id="selectHxbSpuDetailsById" parameterType="Integer" resultMap="HxbSpuDetailsResult">
+        <include refid="selectHxbSpuDetailsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHxbSpuDetails" parameterType="HxbSpuDetails" useGeneratedKeys="true" keyProperty="id">
+        insert into hxb_spu_details
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="detailsName != null">details_name,</if>
+            <if test="detailsContent != null">details_content,</if>
+            <if test="detailsPosters != null">details_posters,</if>
+            <if test="spuId != null">spu_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="detailsName != null">#{detailsName},</if>
+            <if test="detailsContent != null">#{detailsContent},</if>
+            <if test="detailsPosters != null">#{detailsPosters},</if>
+            <if test="spuId != null">#{spuId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHxbSpuDetails" parameterType="HxbSpuDetails">
+        update hxb_spu_details
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="detailsName != null">details_name = #{detailsName},</if>
+            <if test="detailsContent != null">details_content = #{detailsContent},</if>
+            <if test="detailsPosters != null">details_posters = #{detailsPosters},</if>
+            <if test="spuId != null">spu_id = #{spuId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHxbSpuDetailsById" parameterType="Integer">
+        delete from hxb_spu_details where id = #{id}
+    </delete>
+
+    <delete id="deleteHxbSpuDetailsByIds" parameterType="String">
+        delete from hxb_spu_details where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

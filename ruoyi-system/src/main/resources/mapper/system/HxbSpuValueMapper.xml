@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HxbSpuValueMapper">
+    
+    <resultMap type="HxbSpuValue" id="HxbSpuValueResult">
+        <result property="id"    column="id"    />
+        <result property="spuId"    column="spu_id"    />
+        <result property="name"    column="name"    />
+        <result property="salesPrice"    column="sales_price"    />
+        <result property="marketPrice"    column="market_price"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectHxbSpuValueVo">
+        select id, spu_id, name, sales_price, market_price, create_time, update_time from hxb_spu_value
+    </sql>
+
+    <select id="selectHxbSpuValueList" parameterType="HxbSpuValue" resultMap="HxbSpuValueResult">
+        <include refid="selectHxbSpuValueVo"/>
+        <where>  
+            <if test="spuId != null "> and spu_id = #{spuId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="salesPrice != null "> and sales_price = #{salesPrice}</if>
+            <if test="marketPrice != null "> and market_price = #{marketPrice}</if>
+        </where>
+    </select>
+    
+    <select id="selectHxbSpuValueById" parameterType="Integer" resultMap="HxbSpuValueResult">
+        <include refid="selectHxbSpuValueVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHxbSpuValue" parameterType="HxbSpuValue" useGeneratedKeys="true" keyProperty="id">
+        insert into hxb_spu_value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">spu_id,</if>
+            <if test="name != null">name,</if>
+            <if test="salesPrice != null">sales_price,</if>
+            <if test="marketPrice != null">market_price,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spuId != null">#{spuId},</if>
+            <if test="name != null">#{name},</if>
+            <if test="salesPrice != null">#{salesPrice},</if>
+            <if test="marketPrice != null">#{marketPrice},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHxbSpuValue" parameterType="HxbSpuValue">
+        update hxb_spu_value
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spuId != null">spu_id = #{spuId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="salesPrice != null">sales_price = #{salesPrice},</if>
+            <if test="marketPrice != null">market_price = #{marketPrice},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHxbSpuValueById" parameterType="Integer">
+        delete from hxb_spu_value where id = #{id}
+    </delete>
+
+    <delete id="deleteHxbSpuValueByIds" parameterType="String">
+        delete from hxb_spu_value where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
